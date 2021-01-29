@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SDPzadDom
 {
@@ -16,30 +17,38 @@ namespace SDPzadDom
             }
 
         }
-
-        public bool AnalizeText(string text)
+        private string PrepText(string text)
         {
-            string reversedText;
             text = text.Replace(".", "");
             text = text.Replace("!", "");
             text = text.Replace("?", "");
             text = text.Replace(",", "");
-            text = text.Replace(" ", "");
+            text = text.Replace("(", "");
+            text = text.Replace(")", "");
+            text = text.Replace("_", "");
+            text = Regex.Replace(text, @"\s+", "");
             text = text.ToLower();
+            return text;
+        }
+        public bool AnalizeText(string text)
+        {
+            text = PrepText(text);
+            string reversedText;
+            
 
             char[] charArray = text.ToCharArray();
             Array.Reverse(charArray);
             reversedText = new string(charArray);
 
-            if (text == reversedText)
-            {
-                IsPalindrom = true;
-                return true;
-            }
-            else
+            if (text != reversedText || text.Length < 1)
             {
                 IsPalindrom = false;
                 return false;
+            }
+            else
+            {
+                IsPalindrom = true;
+                return true;
             }
 
         }

@@ -35,6 +35,36 @@ namespace SDPzadDom.Test
             Assert.IsFalse(palindromObject.AnalizeText(value));
         }
 
+        [TestCase("")]
+        [TestCase("  ")]
+        [TestCase("     ")]
+        [TestCase("\r")]
+        [TestCase("\t")]
+        [TestCase("\nhehe")]
+        [TestCase("alama\nkota")]
+        [TestCase("komuwdroge\ntemu")]
+        [TestCase("jaki\nstest")]
+        [TestCase("i\tkarjadajrak")]
+        [TestCase("ad\nosłypyłi\nsoda")]
+        [TestCase("ikarjadajrak")]
+        [TestCase("ad\rosłypyłi\rsoda")]
+        public void AnalizeTextTestCleanWhiteSpacesFalse(string value)
+        {
+            Assert.IsFalse(palindromObject.AnalizeText(value));
+        }
+
+
+        [TestCase("a do s\niły pył i soda")]
+        [TestCase("a t\no kiwi zdz\riwi ko\tta")]
+        [TestCase("ik\nar jadaj ra\rki")]
+        [TestCase("a dosiły pył i     soda")]
+        [TestCase("a to \tkiwi zdziwikota           ")]
+        [TestCase("i\tka  rjad\najraki       ")]
+        public void AnalizeTextTestCleanWhiteSpacesTrue(string value)
+        {
+            Assert.IsTrue(palindromObject.AnalizeText(value));
+        }
+
         [TestCase("a do siły pył i soda")]
         [TestCase("a to kiwi zdziwi kota")]
         [TestCase("ikar jadaj raki")]
